@@ -13,7 +13,9 @@ export const SidebarContainer = ({
 }) => (
   <div
     style={
-      isOpen ? { opacity: '100%', top: '0' } : { opacity: '0', top: '-100%' }
+      isOpen
+        ? { opacity: '100%', top: '0' }
+        : { opacity: '0', top: '-100%', display: 'none' }
     }
     onClick={onClick}
     className="SidebarContainer"

@@ -1,0 +1,67 @@
+.LandingPage {
+  width: 100%;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem;
+}
+
+.SearchContainer {
+  width: calc(100vw - 3rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  padding: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.SearchBar {
+  height: 100%;
+  flex: 1;
+  margin-right: 0.5rem;
+  padding: 0.5rem;
+}
+
+.SearchIcon {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid;
+  border-radius: 4px;
+  width: 2rem;
+  cursor: pointer;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.Listing {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  padding: 1rem;
+}
+
+.UserList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.ListHeading {
+}
+
+.ListWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 20px 0;
+}

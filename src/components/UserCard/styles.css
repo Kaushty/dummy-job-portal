@@ -1,0 +1,22 @@
+.UserCard {
+  width: 220px;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  border: 1px solid grey;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  margin: 0px 20px 20px 0px;
+}
+
+.UserCard .UserImage {
+  display: flex;
+  width: 82px;
+  height: 82px;
+  background: #fff no-repeat center;
+  background-size: contain;
+  border-radius: 50%;
+}

@@ -1,0 +1,108 @@
+.CandidateInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  margin-bottom: 1.25rem;
+}
+
+.CandidateHeading {
+  margin-bottom: 1.25rem;
+}
+
+.flex-justify-center {
+  display: flex;
+  justify-content: center;
+}
+
+.CandidateInfo__Card {
+  width: 220px;
+  height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  border: 1px solid grey;
+  border-radius: 10px;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.CandidateInfo__Card .UserImage {
+  display: flex;
+  width: 112px;
+  height: 112px;
+  background: #fff no-repeat center;
+  background-size: contain;
+  border-radius: 50%;
+}
+
+.flex-align-center {
+  display: flex;
+  align-items: center;
+}
+
+.CandidateInfo__action {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: fit-content;
+  width: 100%;
+}
+
+.CandidateInfo__action .ActionContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.CandidateInfo__action .ActionContainer .ActionIcon {
+  width: 40px;
+  height: 40px;
+  margin: 1rem 0;
+}
+
+.CandidateInfo__action .ActionContainer .ActionButton {
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.CandidateInfo__action .ActionContainer .ActionButton.primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.CandidateInfo__action .ActionContainer .ActionButton.primary:hover {
+  color: #fff;
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+.CandidateInfo__action .ActionContainer .ActionButton.danger {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.CandidateInfo__action .ActionContainer .ActionButton.danger:hover {
+  color: #fff;
+  background-color: #c82333;
+  border-color: #bd2130;
+}
