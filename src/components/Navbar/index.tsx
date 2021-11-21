@@ -23,10 +23,10 @@ function Navbar({ toggleSidebar: toggle }: { toggleSidebar(): void }) {
           </MobileIcon>
           <NavMenu>
             <NavItem>
-              <NavLinks to="/shortlist">Shortlisted </NavLinks>
+              <NavLinks to="/shortlisted">Shortlisted </NavLinks>
             </NavItem>
             <NavItem>
-              <NavLinks to="/reject"> Rejected </NavLinks>
+              <NavLinks to="/rejected"> Rejected </NavLinks>
             </NavItem>
           </NavMenu>
         </NavbarContainer>

@@ -100,7 +100,7 @@ function App() {
           }
         />
         <Route
-          path="/shortlist"
+          path="/shortlisted"
           element={
             <ListingPage
               userData={shortlistedData}
@@ -110,7 +110,7 @@ function App() {
           }
         />
         <Route
-          path="/reject"
+          path="/rejected"
           element={
             <ListingPage
               userData={rejectedData}
