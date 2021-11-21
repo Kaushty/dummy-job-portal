@@ -6,18 +6,26 @@ import { Layout, UserCard } from '../../components';
 import { User } from '../../models';
 import './styles.css';
 
-function Home({ appData }: { appData: User[] }) {
-  const [candidates, setCandidates] = useState(appData);
+function ListingPage({
+  userData,
+  heading,
+  loading = false,
+}: {
+  userData: User[];
+  heading: string;
+  loading?: boolean;
+}) {
+  const [candidates, setCandidates] = useState(userData);
   const [searchValue, setSearchValue] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    setCandidates(appData);
-  }, [appData]);
+    setCandidates(userData);
+  }, [userData]);
 
   const handleSearch = () => {
     if (searchValue.length) {
-      const userList = appData.filter((user) =>
+      const userList = userData.filter((user) =>
         user.name.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())
       );
       setCandidates(userList);
@@ -29,9 +37,21 @@ function Home({ appData }: { appData: User[] }) {
   const resetSearch = () => {
     if (searchValue) {
       setSearchValue('');
-      setCandidates(appData);
+      setCandidates(userData);
     }
   };
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="LandingPage LoadingText">
+          <div className="center-text">
+            <h4>Loading ...</h4>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -50,7 +70,7 @@ function Home({ appData }: { appData: User[] }) {
         </div>
         <div className="Listing">
           <div className="UserList">
-            <h1 className="ListHeading">All Candidates</h1>
+            <h1 className="ListHeading">{heading}</h1>
             {!candidates.length && (
               <h4 style={{ marginTop: '20px' }}>No Candidates found</h4>
             )}
@@ -58,7 +78,8 @@ function Home({ appData }: { appData: User[] }) {
               {candidates.map((user) => {
                 return (
                   <UserCard
-                    onClick={() => navigate(`${user.id}`)}
+                    key={user.id}
+                    onClick={() => navigate(`/${user.id}`)}
                     img={user.Image}
                     name={user.name}
                   />
@@ -80,4 +101,4 @@ function Home({ appData }: { appData: User[] }) {
   );
 }
 
-export default Home;
+export default ListingPage;

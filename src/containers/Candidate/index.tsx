@@ -10,27 +10,38 @@ function Candidate({
   userData,
   shortCandidate,
   rejectCandidate,
+  isShortListed,
+  isRejected,
 }: {
   userData: User[];
   shortCandidate(id: string): void;
   rejectCandidate(id: string): void;
+  isShortListed(id: string): boolean;
+  isRejected(id: string): boolean;
 }) {
   const params = useParams();
+  const candidateId = params.candidateId;
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [candidateData, setCandidateData] = useState<User>();
 
   useEffect(() => {
-    const user = userData.find((user) => user.id === params.candidateId);
-    setCandidateData(user);
+    const user = userData.find((user) => user.id === candidateId);
+    if (user?.id) {
+      const shortListed = isShortListed(candidateId || '');
+      const rejected = isRejected(candidateId || '');
+      setCandidateData({ ...user, shortListed, rejected });
+    }
     setLoading(false);
-  }, [params.candidateId, userData]);
+  }, [candidateId, isRejected, isShortListed, userData]);
 
   if (loading) {
     return (
       <Layout>
-        <div className="LandingPage">
-          <div className="center-text">Loading ...</div>
+        <div className="LandingPage LoadingText">
+          <div className="center-text">
+            <h4>Loading ...</h4>
+          </div>
         </div>
       </Layout>
     );
@@ -54,7 +65,7 @@ function Candidate({
       <div className="LandingPage flex-align-center">
         <div className="CandidateInfo">
           <h1 className="CandidateHeading">Candidate Info</h1>
-          <div className="CandidateInfo__Card">
+          <div className="Card CandidateInfo__Card">
             <div
               className="UserImage"
               style={{ backgroundImage: `url(${candidateData?.Image})` }}
@@ -67,6 +78,7 @@ function Candidate({
             <FaUserCheck className="ActionIcon" width={40} height={40} />
             <button
               className="ActionButton primary"
+              disabled={candidateData?.shortListed}
               onClick={() => {
                 shortCandidate(candidateData?.id || '');
                 navigate('/');
@@ -79,6 +91,7 @@ function Candidate({
             <FaUserSlash className="ActionIcon" width={40} height={40} />
             <button
               className="ActionButton danger"
+              disabled={candidateData?.rejected}
               onClick={() => {
                 rejectCandidate(candidateData?.id || '');
                 navigate('/');

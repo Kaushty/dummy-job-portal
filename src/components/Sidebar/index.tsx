@@ -24,8 +24,8 @@ function Sidebar({
       </Icon>
       <SidebarWrapper>
         <SidebarMenu>
-          <SidebarLink to="shortlist">Shortlisted</SidebarLink>
-          <SidebarLink to="reject">Rejected</SidebarLink>
+          <SidebarLink to="/shortlist">Shortlisted</SidebarLink>
+          <SidebarLink to="/reject">Rejected</SidebarLink>
         </SidebarMenu>
       </SidebarWrapper>
     </SidebarContainer>

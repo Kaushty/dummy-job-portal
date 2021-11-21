@@ -1,2 +1,2 @@
-export { default as Home } from './Home/';
-export { default as Candidate } from './Candidate';
+export { default as ListingPage } from './Listing';
+export { default as CandidateInfo } from './Candidate';

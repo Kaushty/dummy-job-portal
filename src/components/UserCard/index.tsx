@@ -12,7 +12,7 @@ function UserCard({
   name: string;
 }) {
   return (
-    <div className="UserCard" onClick={onClick}>
+    <div className="Card UserCard" onClick={onClick}>
       <div
         className="UserImage"
         style={{ backgroundImage: `url(${img})` }}

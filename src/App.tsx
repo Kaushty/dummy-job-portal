@@ -1,101 +1,125 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import { Home, Candidate } from './containers';
+import { ListingPage, CandidateInfo } from './containers';
 import { User } from './models';
+import './App.css';
 
 function App() {
   const [appData, setAppData] = useState<User[]>([]);
   const [shortlistedData, setShortlistedData] = useState<User[]>([]);
-  const [rejectedData, setrejectedData] = useState<User[]>([]);
+  const [rejectedData, setRejectedData] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCandidates = async () => {
+      try {
+        const response = await fetch(
+          'https://s3-ap-southeast-1.amazonaws.com/he-public-data/users49b8675.json'
+        );
+        const users = await response.json();
+        setAppData(users);
+      } catch (err) {
+        console.error('Error:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCandidates();
+  }, []);
+
+  const isUserShortListed = (userId: string) => {
+    const user = shortlistedData.find((user) => user.id === userId);
+    if (user) {
+      return true;
+    }
+    return false;
+  };
+
+  const isUserRejected = (userId: string) => {
+    const user = rejectedData.find((user) => user.id === userId);
+    if (user) {
+      return true;
+    }
+    return false;
+  };
 
   const shortListCandidate = (id: string) => {
-    const user = appData.find((user) => user.id === id);
-    if (user) {
-      setShortlistedData((prevList) => [...prevList, user]);
-      console.log('Candidate Shortlisted successfully');
+    if (!isUserShortListed(id)) {
+      // proceed only if user is not already shortlisted
+      const user = appData.find((user) => user.id === id);
+      if (user) {
+        setShortlistedData((prevList) => [...prevList, user]);
+        if (isUserRejected(id)) {
+          // if user was previously rejected remove them from that list
+          setRejectedData(rejectedData.filter((user) => user.id !== id));
+        }
+        console.log('Candidate Shortlisted successfully');
+      }
     }
   };
 
   const rejectCandidate = (id: string) => {
-    const user = appData.find((user) => user.id === id);
-    if (user) {
-      setrejectedData((prevList) => [...prevList, user]);
-      console.log('Candidate Rejected successfully');
+    if (!isUserRejected(id)) {
+      // proceed only when user is not already rejected
+      const user = appData.find((user) => user.id === id);
+      if (user) {
+        setRejectedData((prevList) => [...prevList, user]);
+        if (isUserShortListed(id)) {
+          // if user was previously shortlisted, remove them from that list
+          setShortlistedData(shortlistedData.filter((user) => user.id !== id));
+        }
+        console.log('Candidate Rejected successfully');
+      }
     }
   };
-
-  useEffect(() => {
-    setAppData([
-      {
-        Image:
-          'https://s3-ap-southeast-1.amazonaws.com/he-public-data/user14b9a23c.png',
-        name: 'User1',
-        id: '1001',
-      },
-      {
-        Image:
-          'https://s3-ap-southeast-1.amazonaws.com/he-public-data/user20c5688c.jpg',
-        name: 'User2',
-        id: '1002',
-      },
-      {
-        Image:
-          'https://s3-ap-southeast-1.amazonaws.com/he-public-data/Richard%20Mathew3350914.jpg',
-        name: 'Richard Matthew',
-        id: '1003',
-      },
-      {
-        Image:
-          'https://s3-ap-southeast-1.amazonaws.com/he-public-data/Richard_Davies_Hansons_27b0aae3.jpeg',
-        name: 'Richard Hansons',
-        id: '1004',
-      },
-      {
-        Image:
-          'https://s3-ap-southeast-1.amazonaws.com/he-public-data/betty%20hansonb071ac8.jpg',
-        name: 'Betty Hanson',
-        id: '1005',
-      },
-      {
-        Image:
-          'https://s3-ap-southeast-1.amazonaws.com/he-public-data/doug%20hermann1a0ca42.jpg',
-        name: 'Doug Hermann',
-        id: '1006',
-      },
-      {
-        Image:
-          'https://s3-ap-southeast-1.amazonaws.com/he-public-data/martha%20hermann4ceeba1.jpg',
-        name: 'Martha Hermann',
-        id: '1007',
-      },
-      {
-        Image:
-          'https://s3-ap-southeast-1.amazonaws.com/he-public-data/dotty%20feliz841b64f.jpg',
-        name: 'Dotty Feliz',
-        id: '1008',
-      },
-    ]);
-  }, []);
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home appData={appData} />} />
         <Route
-          path="/:candidateId"
+          path="/"
           element={
-            <Candidate
+            <ListingPage
               userData={appData}
-              shortCandidate={shortListCandidate}
-              rejectCandidate={rejectCandidate}
+              heading={'All Candidates'}
+              loading={loading}
             />
           }
         />
-        <Route path="/shortlist" element={<Home appData={appData} />} />
-        <Route path="/reject" element={<Home appData={appData} />} />
-        <Route path="*" element={<Home appData={appData} />} />
+        <Route
+          path="/:candidateId"
+          element={
+            <CandidateInfo
+              userData={appData}
+              shortCandidate={shortListCandidate}
+              rejectCandidate={rejectCandidate}
+              isShortListed={isUserShortListed}
+              isRejected={isUserRejected}
+            />
+          }
+        />
+        <Route
+          path="/shortlist"
+          element={
+            <ListingPage
+              userData={shortlistedData}
+              heading={'Shortlisted Candidates'}
+              loading={loading}
+            />
+          }
+        />
+        <Route
+          path="/reject"
+          element={
+            <ListingPage
+              userData={rejectedData}
+              heading={'Rejected Candidates'}
+              loading={loading}
+            />
+          }
+        />
+        <Route path="*" element={null} />
       </Routes>
     </Router>
   );

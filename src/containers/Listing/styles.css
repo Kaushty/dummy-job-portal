@@ -7,6 +7,12 @@
   padding: 1.25rem;
 }
 
+.LoadingText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .SearchContainer {
   width: calc(100vw - 3rem);
   display: flex;
@@ -14,7 +20,7 @@
   align-items: center;
   height: 50px;
   padding: 0.5rem;
-  margin-bottom: 1.25rem;
+  margin: 1.25rem 0;
 }
 
 .SearchBar {
@@ -33,6 +39,10 @@
   border-radius: 4px;
   width: 2rem;
   cursor: pointer;
+}
+
+.SearchIcon:hover {
+  background-color: #e2e6ea;
 }
 
 .flex-row {
@@ -54,9 +64,6 @@
   align-items: center;
   flex: 1;
   flex-wrap: wrap;
-}
-
-.ListHeading {
 }
 
 .ListWrapper {
